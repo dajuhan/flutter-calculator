@@ -9,7 +9,7 @@ class CalculatorApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'GitHub Copilot Calculator',
+      title: 'Calculator',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -41,6 +41,15 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         } catch (e) {
           _result = ' Error';
         }
+      } else if (value == '^2') {
+        try {
+          final expression = Expression.parse(_expression);
+          final evaluator = const ExpressionEvaluator();
+          final result = evaluator.eval(expression, {});
+          _expression = '($result * $result)';
+        } catch (e) {
+          _result = ' Error';
+        }
       } else {
         _expression += value;
       }
@@ -63,7 +72,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Davids Calculator'),
+        title: Text('GitHub Copilot Calculator'),
       ),
       body: Column(
         children: <Widget>[
@@ -108,6 +117,11 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
               _buildButton('C'),
               _buildButton('='),
               _buildButton('+'),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              _buildButton('^2'),
             ],
           ),
         ],
